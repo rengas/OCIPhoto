@@ -1,0 +1,145 @@
+<!DOCTYPE html>    
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no, maximum-scale=1.0">
+    <title>OCI CARD PHOTO EDITOR</title>
+<style>
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+
+}
+body{
+	background-color: #D4D4D4;
+}
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
+}
+.row-centered {
+    text-align:center;
+}
+
+</style>
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js" ></script>
+ 	<script src="https://cdn.rawgit.com/eligrey/Blob.js/master/Blob.js"/></script>
+  <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/master/canvas-toBlob.js"/></script>
+  <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/master/FileSaver.js"/></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+ </head>
+
+<body>
+<div class="container">
+ 	<div class="row no-gutter row-centered" >
+ 		<h1>OCI CARD  resizer</h1>
+ 		   
+ 		   <div class= "col-md-6">
+ 		   <button type="button" id="photo"class="btn btn-block btn-info ">Photo resizer</button>
+ 		   </div>
+ 		   <div class= "col-md-6">
+ 		   <button type="button" id="sign" class="btn btn-block btn-info ">Sign Resizer</button>
+ 		   </div>
+  	</div>
+
+  	<div class="row">
+
+       <div class= "col-md-6">
+        <h3>1.Choose your photo</br>
+        <input type="file" id="imageLoader" name="imageLoader" display="none" />
+        <canvas id="c"></canvas>
+        <h3>2.Hit save.</h3>
+        <input id="save" type="submit" name="button" value="Save" class="btn btn-default btn-primary"/>
+       </div>
+     
+	</div>
+	
+	</div>
+</div>
+</body>
+ 
+<script>
+	$(function () {
+
+		var canvas= new fabric.StaticCanvas('c');
+
+		var canvas1 = document.getElementById("c"), ctx = canvas1.getContext("2d");
+// draw to canvas...
+     
+     var imageloader=document.getElementById('imageloader');
+     var imageHeight=imageWidth=canvasHeight=canvasWidth=500;
+     var filename="OCI.jpg"
+    
+     imageLoader.addEventListener('change',function handleImage(e) {
+      var reader = new FileReader();
+      reader.onload = function (event){
+      var imgObj = new Image();
+      imgObj.src = event.target.result;
+      imgObj.onload = function () {
+      var image = new fabric.Image(imgObj);
+      console.log(image);
+      image.set({
+            angle: 0,
+            padding: 10,
+            cornersize:10,
+            height:imageHeight,
+            width:imageWidth,
+       });
+      canvas.setHeight(canvasHeight);
+      canvas.setWidth(canvasWidth);
+      canvas.add(image);
+      canvas.renderAll();
+      
+      }
+    }
+    reader.readAsDataURL(e.target.files[0]);
+    });
+
+     var Photo=document.getElementById('photo')
+
+     Photo.addEventListener('click',function (argument) {
+       // body...
+
+       console.log("photo");
+       canvasHeight=imageHeight=250;
+       canvasWidth=imageWidth=430;
+       filename="OCI_Photo.jpg";
+       canvas.clear();
+     });
+
+
+
+     var Sign=document.getElementById('sign')
+
+     Sign.addEventListener('click',function (argument) {
+       // body...
+       canvasHeight=imageHeight=100;
+       canvasWidth=imageWidth=300;
+       filename="OCI_Sign.jpg";
+       canvas.clear();
+      
+     });
+
+	 
+     var Save = document.getElementById('save');
+     Save.addEventListener('click', function (e) {
+     canvas1.toBlob(function(blob) {
+      console.log(blob);
+     saveAs(blob, filename);
+     },"image/jpeg");
+});
+
+	});
+</script>
+		
+</head>
+ 
+ 
+</html>
+
+
+ 
+       
