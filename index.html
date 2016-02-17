@@ -50,9 +50,15 @@ body{
        <div class= "col-md-6">
         <h3>1.Choose your photo</br>
         <input type="file" id="imageLoader" name="imageLoader" display="none" />
-        <canvas id="c"></canvas>
-        <h3>2.Hit save.</h3>
+        <h3>2.Choose your photo</br>
+        <input id="slider1" type="range" min="100" max="500" step="10" />
+        <label for="Data_size">Size:</label>
+        <input type="text" id="Data_size">
+        
+
+        <h3>3.Hit save.</h3>
         <input id="save" type="submit" name="button" value="Save" class="btn btn-default btn-primary"/>
+        <canvas id="c"></canvas>
        </div>
      
 	</div>
@@ -128,9 +134,11 @@ body{
      var Save = document.getElementById('save');
      Save.addEventListener('click', function (e) {
      canvas1.toBlob(function(blob) {
-      console.log(blob);
      saveAs(blob, filename);
      },"image/jpeg",0.7);
+
+   
+
 
 });
 
