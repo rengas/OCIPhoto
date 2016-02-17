@@ -80,14 +80,15 @@ body{
       imgObj.src = event.target.result;
       imgObj.onload = function () {
       var image = new fabric.Image(imgObj);
-      console.log(image);
+      //console.log(image);
       image.set({
             angle: 0,
             padding: 10,
             cornersize:10,
             height:imageHeight,
-            width:imageWidth,
+            width:imageWidth
        });
+      
       canvas.setHeight(canvasHeight);
       canvas.setWidth(canvasWidth);
       canvas.add(image);
@@ -104,8 +105,8 @@ body{
        // body...
 
        console.log("photo");
-       canvasHeight=imageHeight=250;
-       canvasWidth=imageWidth=430;
+       canvasHeight=imageHeight=500;
+       canvasWidth=imageWidth=500;
        filename="OCI_Photo.jpg";
        canvas.clear();
      });
@@ -129,7 +130,8 @@ body{
      canvas1.toBlob(function(blob) {
       console.log(blob);
      saveAs(blob, filename);
-     },"image/jpeg");
+     },"image/jpeg",0.7);
+
 });
 
 	});
