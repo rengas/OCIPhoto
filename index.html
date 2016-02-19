@@ -7,7 +7,6 @@
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
-
 }
 body{
 	background-color: #D4D4D4;
@@ -22,13 +21,15 @@ body{
 
 </style>
     <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js" ></script>
  	<script src="https://cdn.rawgit.com/eligrey/Blob.js/master/Blob.js"/></script>
   <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/master/canvas-toBlob.js"/></script>
   <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/master/FileSaver.js"/></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+  integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
  </head>
 
@@ -51,11 +52,9 @@ body{
         <h3>1.Choose your photo</br>
         <input type="file" id="imageLoader" name="imageLoader" display="none" />
         <h3>2.Choose your photo</br>
-        <input id="slider1" type="range" min="100" max="500" step="10" />
+        <input id="slider1" type="range" min="0" max="100" step="1" />
         <label for="Data_size">Size:</label>
         <input type="text" id="Data_size">
-        
-
         <h3>3.Hit save.</h3>
         <input id="save" type="submit" name="button" value="Save" class="btn btn-default btn-primary"/>
         <canvas id="c"></canvas>
@@ -71,14 +70,12 @@ body{
 	$(function () {
 
 		var canvas= new fabric.StaticCanvas('c');
-
 		var canvas1 = document.getElementById("c"), ctx = canvas1.getContext("2d");
-// draw to canvas...
-     
+    var imageHeight=imageWidth=canvasHeight=canvasWidth=500;
+    var filename="OCI.jpg"
+
      var imageloader=document.getElementById('imageloader');
-     var imageHeight=imageWidth=canvasHeight=canvasWidth=500;
-     var filename="OCI.jpg"
-    
+
      imageLoader.addEventListener('change',function handleImage(e) {
       var reader = new FileReader();
       reader.onload = function (event){
@@ -132,15 +129,22 @@ body{
 
 	 
      var Save = document.getElementById('save');
-     Save.addEventListener('click', function (e) {
+     
+     Save.addEventListener('click', function (argument) {
      canvas1.toBlob(function(blob) {
      saveAs(blob, filename);
      },"image/jpeg",0.7);
+    });
 
-   
+     var slider= document.getElementById('slider1');
 
-
-});
+     slider.addEventListener('mouseup',function (argument){
+      console.log(slider.value);
+      var size =  canvas1.toBlob(function(blob) {
+     console.log(blob.size);
+     },"image/jpeg",slider.value/100);
+      
+     });
 
 	});
 </script>
