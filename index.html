@@ -18,7 +18,22 @@ body{
 .row-centered {
     text-align:center;
 }
-
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 </style>
     <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
@@ -39,10 +54,10 @@ body{
  		<h1>OCI CARD  resizer</h1>
  		   
  		   <div class= "col-md-6">
- 		   <button type="button" id="photo"class="btn btn-block btn-info ">Photo resizer</button>
+ 		   <button type="button" id="photo"class="btn btn-block btn-primary ">Photo resizer</button>
  		   </div>
  		   <div class= "col-md-6">
- 		   <button type="button" id="sign" class="btn btn-block btn-info ">Sign Resizer</button>
+ 		   <button type="button" id="sign" class="btn btn-block btn-primary ">Sign Resizer</button>
  		   </div>
   	</div>
 
@@ -50,15 +65,24 @@ body{
 
        <div class= "col-md-6">
         <h3>1.Choose your photo</br>
-        <input type="file" id="imageLoader" name="imageLoader" display="none" />
-        <h3>2.Choose your photo</br>
-        <input id="slider1" type="range" min="0" max="100" step="1" />
-        <label for="Data_size">Size:</label>
-        <input type="text" id="Data_size">
+        <input id="uploadFile" placeholder="Choose File" disabled="disabled" />
+        <div class="fileUpload btn btn-primary">
+          <span>Upload</span>
+          <input id="uploadBtn" type="file" class="upload" />
+        </div>
+
+        <h3>2.Set Quality(Must be less than 30kb)</br>
+        <input id="slider1" type="range" min="0" max="100" value="0" step="1" />
+        <label id="imagesizelabel">Size:</label>
+        <label id="imagesize">0</label> kb
+        
         <h3>3.Hit save.</h3>
         <input id="save" type="submit" name="button" value="Save" class="btn btn-default btn-primary"/>
-        <canvas id="c"></canvas>
+       
        </div>
+        <div class= "col-md-6">
+         <canvas id="c"></canvas>
+        </div>
      
 	</div>
 	
@@ -73,10 +97,12 @@ body{
 		var canvas1 = document.getElementById("c"), ctx = canvas1.getContext("2d");
     var imageHeight=imageWidth=canvasHeight=canvasWidth=500;
     var filename="OCI.jpg"
+    var filesize=0;
+     var imageloader=document.getElementById('uploadBtn');
 
-     var imageloader=document.getElementById('imageloader');
+     imageloader.addEventListener('change',function handleImage(e) {
 
-     imageLoader.addEventListener('change',function handleImage(e) {
+      document.getElementById("uploadFile").value = this.value;
       var reader = new FileReader();
       reader.onload = function (event){
       var imgObj = new Image();
@@ -91,7 +117,7 @@ body{
             height:imageHeight,
             width:imageWidth
        });
-      
+      filesize=canvasHeight*canvasWidth;
       canvas.setHeight(canvasHeight);
       canvas.setWidth(canvasWidth);
       canvas.add(image);
@@ -120,7 +146,10 @@ body{
 
      Sign.addEventListener('click',function (argument) {
        // body...
-       canvasHeight=imageHeight=100;
+      $("#imagesize").text('0');
+      $("#slider1").val(0);
+      $("#uploadFile").val("");
+       canvasHeight=imageHeight=150;
        canvasWidth=imageWidth=300;
        filename="OCI_Sign.jpg";
        canvas.clear();
@@ -133,15 +162,18 @@ body{
      Save.addEventListener('click', function (argument) {
      canvas1.toBlob(function(blob) {
      saveAs(blob, filename);
-     },"image/jpeg",0.7);
+     },"image/jpeg",filesize);
     });
 
      var slider= document.getElementById('slider1');
 
      slider.addEventListener('mouseup',function (argument){
       console.log(slider.value);
+     // calculate size
       var size =  canvas1.toBlob(function(blob) {
-     console.log(blob.size);
+        $("#imagesize").text(Math.ceil((blob.size/1024)));
+        filesize=slider.value/100;
+
      },"image/jpeg",slider.value/100);
       
      });
@@ -157,3 +189,5 @@ body{
 
  
        
+
+    
