@@ -16,13 +16,15 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
   integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <style>
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,700);
 .nopadding {
    padding: 0 !important;
    margin: 0 !important;
 }
 
 h1{
-   font-family: 'Open Sans', sans-serif;
+ font-family: 'Bitter', serif;
+ color: #337AB7;
 }
 .no-gutter > [class*='col-'] {
     padding-right:0;
@@ -47,20 +49,23 @@ h1{
     opacity: 0;
     filter: alpha(opacity=0);
 }
+body{
+background-color: #ededed;
 
+}
 </style>
  </head>
 
 <body>
 <div class="container">
- 	<div class="row no-gutter row-centered" >
- 		<h1>OCI APPLICATION PHOTO EDITOR</h1>
+ 	<div class="row no-gutter row-centered"  >
+ 		<h1>OCI CARD PHOTO EDITOR</h1>
  		   
  		   <div class= "col-md-6">
- 		   <button type="button" id="photo"class="btn btn-block btn-primary ">Photo resizer</button>
+ 		   <button type="button" id="photo"class="btn btn-block btn-primary btn-lg">Photo resizer</button>
  		   </div>
  		   <div class= "col-md-6">
- 		   <button type="button" id="sign" class="btn btn-block btn-primary ">Sign Resizer</button>
+ 		   <button type="button" id="sign" class="btn btn-block btn-primary btn-lg ">Sign Resizer</button>
  		   </div>
       
   	</div>
@@ -80,7 +85,7 @@ h1{
         <label id="imagesize">0</label> kb
         
         <h3>3.Hit save.</h3>
-        <input id="save" type="submit" name="button" value="Save" class="btn btn-default btn-primary"/>
+        <input id="save" type="submit" name="button" value="Save" class="btn btn-lg btn-success"/>
        
        </div>
         <div class= "col-md-6">
@@ -90,9 +95,14 @@ h1{
 
      <div class="row" >
        <div class= "col-md-8">
-       <h4>An app to compress your photo and Signature according to ridiculous rules set by Indian High commision for OCI Card applications which looks as follows.
+       <h4>Compress your photo and Signature according to ridiculous rules set by Indian High commision for OCI Card applications which looks as follows.
         </h4>
-        <img src="rules.png">
+        <ul>
+        <li> Applicant's Image and Applicant's Signature Image Should be of jpeg or jpg format.</li>
+       <li>  Applicant's Image and Applicant's Signature Image shoul not be larger than 30kb</li>
+       <li>  Applicant's Image must be square i.e. aspect ration must be 1:1</li>
+       <li>  Applicant's Signature Images should have aspect ratio must be 1:3 </li>
+        </ul>
         </div>
      </div>
 	</div>
